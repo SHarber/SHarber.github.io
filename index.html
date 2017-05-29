@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+		<meta charset="UTF-8">
+		<title>How-To make a simple Blackjack Game using Deck Of Cards API</title>
+		<link rel="stylesheet" type="text/css" href="./Home.css" />
+</head>
+
+<body>
+    <div id="homeHeader">
+        <h1>Create A Simple Blackjack Game</h1>
+        <h2>Using Deck Of Cards API </h2>
+        <h5>By Sarah Harber</h5>
+    </div>
+        <div class="homepage" id="intro">
+            <h1> Introduction to the Deck Of Cards API</h1>
+            <h3>What is the Deck of Cards API?</h3>
+            <p> The <a href="http://deckofcardsapi.com/">Deck of Cards API</a> is an API created to simulate a deck of cards. Card games only require a few simple actions to play any card game you can imagine. The deck of cards API was created to simulate those actions. You can use the deck of cards API to create any game you would like!</p>
+
+            <h3>What you will learn in this guide:</h3>
+            <ul>
+                <li>What an API is and how to use them.</li>
+                <li>Specific uses of the Deck of Cards API. </li>
+                <li>How to create a simple Blackjack game</li>
+            </ul>
+            
+            <h1>What is an API?</h1>
+            <h3>API stands for Application Programming Interface.</h3>
+            <p>The most important thing to remember about APIs is the Interface (the I in API).  Interfaces simplify complicated systems and tasks for the user.   Think of API’s like learning to drive a car.  When you learn how to drive, you don’t need to know how to build a car, how the engine works, or how every part makes the car drive.  You just need to know how to use the interface: the pedals, the steering wheel, the mirrors.</p>
+            
+            <h3>APIs allow for a standarization of information and communication.</h3>
+            <p>Specifically, a web API uses URLs as controls.  You request information from the URL and it sends back information as a response.   These responses are usually plain text with the requested information.  In web development, we use this information to create a webpage that looks nice for the user (you).</p>
+            
+            <h1>Deck of Cards API</h1>
+            <p>The Deck of Cards API simulates a deck of cards with all the possible actions needed to create any card game you desire!  In this how-to guide, we are going to create a simple black jack game!</p>
+            
+            <h1>Let's see What Deck Of Cards Can Do!</h1>
+            <h3>Get a Deck of Cards</h3>
+            <p>The first step to using the deck of cards API is to get a deck ID.   The Deck Id is used to keep playing on the same deck you started the game with.  The API allows you to get a deck ID using 3 of their APIs.</p>
+            <ul>
+                <li>"A Brand New Deck"</li>
+                <li>"A Partial Deck"</li>
+                <li>"Shuffle The Cards"</li>
+            </ul>
+            
+            <p>Let’s look at these in a little more detail.<br><br>A Brand New Deck does exactly what you would think it does.  Imagine opening up a brand new deck of cards from the store.  There are 52 cards (minus jokers) in a beautiful nice order. (Ace of spades, 2 of spades etc.)</p>
+            <p>A Partial Deck is used when you want only certain cards in your deck.  When calling this API you will get a deck back with only the individual cards you have chosen.  This would be ideal for creating games like Euchre.  </p>
+            <p>Finally, we have Shuffle The Cards!  This allows us to create a new deck of cards, specify the number of decks we would like to use, and it shuffles all of the decks together.  This is ideal for a black jack game, because when playing black jack 6 decks of cards are used.  </p>
+            <h3>So let's get our deck!</h3>
+            <p>“A Brand New Deck”, “A Partial Deck”, and “Shuffle The Cards” will all return 4 things to us after we request our new deck:</p>
+            <ol>
+                <li>If the deck is shuffled (‘shuffled’).</li>
+                <li>How many cards are remaining in the deck (‘remaining’).</li>
+                <li>Our deck id (‘deck_id’).</li>
+                <li>If our request was successful (‘success’).</li>
+            </ol>
+            <p>We are going to focus on “Shuffle the Cards” since this is the API needed for the 6 decks used in black jack.  </p>
+            
+            <p>The URL needed to make a “Shuffle the Cards” request is: </p> 
+            <p id="API">https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=6</p>
+            <p>The deck_count in the url is where you specify how many decks you would like to use.  In this case, we are using 6 decks. </p>
+            
+            <h1>Making an AJAX Request</h1>
+            <p>Now that we know what the API does, and we have the URL, we need to know how to request the information and get a response back.  This is done using an AJAX request in our JavaScript code. </p>
+            <h3>What is AJAX?</h3>
+            <p>AJAX stands for Asynchronous JavaScript and XML.  In the past, XML (Extensible Markup Language) was the only choice for open data interchange, however, over the years JSON (JavaScript Object Notation) has become more popular as its less verbose and faster.  Our examples will use JSON.  </p>
+            
+            <h3>Now Let's look at some code!</h3>
+            <p>The first step is to create a new XMLHttpRequest.  Although we are using JSON instead of XML we still use this as it is compatible with a JSON request.   </p>
+            <p>Next we are going to initialize the object through an open request.   This must occur before sending the request.   In our open request, we will state what type of request (GET or POST), the API URL needed to make the request, and if you want to make a synchronous request(false) or an asynchronous request (true). </p>
+            <p>To use Deck of Cards API you can use either a GET or a POST request.  We will only be using GET and asynchronous requests.   ***Note: The Request for a Deck ID MUST be complete before any other APIs are used***  Once we submit our request, we will get a response back that looks like this:</p>
+            <a class="jsbin-embed" href="http://jsbin.com/ludesup/embed?console">JS Bin on jsbin.com</a><script src="http://static.jsbin.com/js/embed.min.js?4.0.2"></script>
+            
+            <p>We see that our deck is shuffled, 312 cards remain, we have our deck_id, and our request was successful. Now that we have our deck id.  We are ready to start using the other APIs!  </p>
+            
+            <h1>Drawing Cards</h1>
+            <p>Deck of Cards has an API Called “Draw a Card”.  This is how we will deal our cards to the player and the dealer.  We will make another AJAX request using JSON.</p>
+            <p>The URL for a “Draw a Card” request is:</p>
+            <p id="API">https://deckofcardsapi.com/api/deck/deck_id/draw/?count=2</p>
+            <p>The key to this request is to replace deck_id with the deck id we created in the last step.  The count is the number of cards you want to draw.  Let’s create a request to draw 2 cards for the player, and 2 cards for the dealer.  Here is an example of our request:</p>
+            <a class="jsbin-embed" href="http://jsbin.com/hinohok/embed?js,console,output">JS Bin on jsbin.com</a><script src="http://static.jsbin.com/js/embed.min.js?4.0.2"></script>
+            
+            <h3>”Draw a Card” Response</h3>
+<p>As you can see in our example above, we requested 2 cards from our deck using our deck ID.  The response from this request returns a "cards" object.  The cards object will contain the number of cards you requested in the form of more objects.  The individual sub-card objects will contain: </p>
+<ul>
+	<li>Card Code: The card code is composed of either 2 letters, or a number and a letter.   This is a unique identifier for each card.  For example, 9D stands for the 9 of diamonds, QS stands for the queen of spades, etc.  </li>
+	<li>URL for an image of the card.  The .png image is returned under the image element.  This response also returns an images object which contains a .png and .svg image file</li>
+	<li>The suit of the card.</li>
+	<li>The value of the card. </li>
+</ul>
+
+<p>This will give you all of the information you will need to create an interface and rules for your own blackjack game.</p>
+            
+<H1>Create your Game!</H1>
+<h3>You now have all the tools you need to create your own game!</h3>
+<p>Congratulations!  Using just those two APIs you can create your own black jack game!</p>
+        </div>
+        
+    
+    
+</body>
+
+</html>
